@@ -2,182 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Annual Meeting Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Builder</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f4f8fc;
-      margin: 0;
-      padding: 0;
-      color: #1a1a1a;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f4f6f9;
     }
-
-    header {
-      background: #004080; /* Don Bosco deep blue */
-      color: white;
+    h2 {
       text-align: center;
-      padding: 2rem 1rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      color: #333;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2rem;
-      letter-spacing: 1px;
-    }
-
-    main {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 2rem;
-    }
-
-    .form-card {
-      background: white;
-      border-radius: 15px;
-      padding: 2rem;
-      width: 100%;
-      max-width: 600px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-      animation: fadeIn 0.6s ease;
-    }
-
-    .form-card h2 {
-      margin-top: 0;
-      color: #004080;
-      text-align: center;
-      font-size: 1.6rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
-    .form-group label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #003060;
-    }
-
-    .form-group input, 
-    .form-group select, 
-    .form-group textarea {
-      width: 100%;
-      padding: 0.8rem;
-      border: 1px solid #cfd8e3;
+    #toolbox, #form-area {
+      border: 2px dashed #888;
       border-radius: 10px;
-      font-size: 1rem;
-      transition: border 0.3s;
+      padding: 15px;
+      min-height: 150px;
+      margin: 20px auto;
+      width: 90%;
+      background: white;
     }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: #004080;
-      outline: none;
-      box-shadow: 0 0 5px rgba(0,64,128,0.2);
+    #toolbox {
+      background: #e9f5ff;
     }
-
-    button {
-      background: #004080;
+    .field {
+      padding: 10px;
+      margin: 8px 0;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      cursor: grab;
+    }
+    .field:hover {
+      background: #f1faff;
+    }
+    #form-area .field {
+      cursor: default;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 6px;
+      margin-bottom: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #exportBtn {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background: #0078d7;
       color: white;
       border: none;
-      padding: 0.9rem 2rem;
-      border-radius: 12px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: background 0.3s;
-      width: 100%;
     }
-
-    button:hover {
-      background: #0059b3;
+    #exportBtn:hover {
+      background: #005fa3;
     }
-
-    footer {
-      background: #00264d;
-      color: #dbe8f8;
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.9rem;
-      margin-top: 3rem;
-    }
-
-    footer p {
-      margin: 0.3rem 0;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    #output {
+      margin-top: 20px;
+      padding: 10px;
+      background: #fefefe;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      white-space: pre-wrap;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Annual Meeting Registration</h1>
-  </header>
+  <h2>Drag & Drop Form Builder</h2>
 
-  <main>
-    <div class="form-card">
-      <h2>Please Fill Your Details</h2>
-      <form id="meetingForm">
-        <div class="form-group">
-          <label for="fullname">Full Name</label>
-          <input type="text" id="fullname" name="fullname" placeholder="Enter your full name" required>
-        </div>
+  <div id="toolbox">
+    <div class="field" draggable="true" data-type="text">Text Input</div>
+    <div class="field" draggable="true" data-type="email">Email Input</div>
+    <div class="field" draggable="true" data-type="textarea">Textarea</div>
+    <div class="field" draggable="true" data-type="select">Dropdown</div>
+  </div>
 
-        <div class="form-group">
-          <label for="email">Email Address</label>
-          <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        </div>
+  <h3 style="text-align:center;">Your Form</h3>
+  <form id="form-area"></form>
 
-        <div class="form-group">
-          <label for="phone">Phone Number</label>
-          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number">
-        </div>
-
-        <div class="form-group">
-          <label for="org">Organization / Department</label>
-          <input type="text" id="org" name="org" placeholder="Enter your organization">
-        </div>
-
-        <div class="form-group">
-          <label for="role">Role in Meeting</label>
-          <select id="role" name="role" required>
-            <option value="">-- Select your role --</option>
-            <option value="participant">Participant</option>
-            <option value="speaker">Speaker</option>
-            <option value="organizer">Organizer</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="remarks">Remarks (Optional)</label>
-          <textarea id="remarks" name="remarks" rows="4" placeholder="Any special notes..."></textarea>
-        </div>
-
-        <button type="submit">Submit</button>
-      </form>
-    </div>
-  </main>
-
-  <footer>
-    <p>Designed by <strong>Stephen Njuguna Mwangi</strong></p>
-    <p>Email: <a href="mailto:devstephen.ke@gmail.com" style="color:#66aaff;">devstephen.ke@gmail.com</a></p>
-    <p>Phone: <a href="tel:+254745534836" style="color:#66aaff;">0745 534 836</a></p>
-  </footer>
+  <button id="exportBtn">Export Form HTML</button>
+  <div id="output"></div>
 
   <script>
-    document.getElementById('meetingForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      alert("✅ Your details have been submitted successfully!");
-      this.reset();
+    const toolbox = document.getElementById("toolbox");
+    const formArea = document.getElementById("form-area");
+    const output = document.getElementById("output");
+
+    let dragged;
+
+    // Drag start
+    toolbox.addEventListener("dragstart", e => {
+      if (e.target.classList.contains("field")) {
+        dragged = e.target.getAttribute("data-type");
+      }
+    });
+
+    // Drag over form area
+    formArea.addEventListener("dragover", e => {
+      e.preventDefault();
+    });
+
+    // Drop element into form area
+    formArea.addEventListener("drop", e => {
+      e.preventDefault();
+      addField(dragged);
+    });
+
+    function addField(type) {
+      let field = document.createElement("div");
+      field.classList.add("field");
+
+      if (type === "text") {
+        field.innerHTML = `<label>Text Input</label><input type="text" placeholder="Enter text"/>`;
+      } else if (type === "email") {
+        field.innerHTML = `<label>Email</label><input type="email" placeholder="Enter email"/>`;
+      } else if (type === "textarea") {
+        field.innerHTML = `<label>Message</label><textarea rows="3"></textarea>`;
+      } else if (type === "select") {
+        field.innerHTML = `<label>Choose Option</label>
+          <select>
+            <option>Option 1</option>
+            <option>Option 2</option>
+          </select>`;
+      }
+      formArea.appendChild(field);
+    }
+
+    // Export button
+    document.getElementById("exportBtn").addEventListener("click", () => {
+      output.textContent = formArea.innerHTML.trim();
     });
   </script>
 </body>
